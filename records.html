@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Records - MediMitra</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/records.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar (reuse from index.html) -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">MediMitra</a>
+            <div class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="records.html" class="active">Records</a></li>
+                <li><a href="appointments.html">Appointments</a></li>
+                <li class="user-menu">
+                    <a href="#" class="user-name">User</a>
+                    <div class="dropdown-menu">
+                        <a href="profile.html">Profile</a>
+                        <a href="#" class="logout-btn">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="records-container">
+        <!-- AI Report Analyzer Section -->
+        <section class="ai-analyzer">
+            <h2><i class="fas fa-robot"></i> AI Report Analyzer</h2>
+            <p>Upload your medical reports for instant AI-powered analysis and insights.</p>
+            
+            <div class="analyzer-dropzone" id="analyzerDropZone">
+                <div class="upload-content">
+                    <i class="fas fa-cloud-upload-alt analyzer-icon"></i>
+                    <p class="analyzer-text">Drag & Drop your report here</p>
+                    <div class="file-input-container">
+                        <button type="button" class="browse-btn">
+                            <i class="fas fa-folder-open"></i> Browse Files
+                        </button>
+                        <input type="file" id="analyzerFileInput" multiple accept=".pdf,.jpg,.jpeg,.png">
+                    </div>
+                </div>
+                <div class="supported-formats">
+                    <div class="format-item"><i class="fas fa-file-pdf"></i> PDF</div>
+                    <div class="format-item"><i class="fas fa-file-image"></i> JPG/JPEG</div>
+                    <div class="format-item"><i class="fas fa-file-image"></i> PNG</div>
+                </div>
+            </div>
+
+            <div class="analysis-results" id="analysisResults" style="display: none;">
+                <!-- Analysis results will be populated here -->
+            </div>
+        </section>
+
+        <!-- Health Records Section -->
+        <section class="records-section">
+            <div class="records-header">
+                <h1>Health Records</h1>
+                <button id="uploadRecord" class="upload-btn">
+                    <i class="fas fa-plus"></i> Upload Record
+                </button>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="searchRecords" placeholder="Search records...">
+            </div>
+
+            <div id="recordsList" class="records-list">
+                <!-- Records will be populated here -->
+            </div>
+        </section>
+
+        <!-- Upload Modal -->
+        <div id="uploadModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Upload Health Record</h3>
+                    <button class="close-btn">&times;</button>
+                </div>
+                <form id="uploadForm" class="upload-form">
+                    <div class="form-group">
+                        <label for="recordTitle">Title</label>
+                        <input type="text" id="recordTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recordType">Type</label>
+                        <select id="recordType" required>
+                            <option value="">Select Type</option>
+                            <option value="lab">Lab Report</option>
+                            <option value="imaging">Imaging</option>
+                            <option value="prescription">Prescription</option>
+                            <option value="vaccination">Vaccination</option>
+                            <option value="vital">Vital Signs</option>
+                            <option value="measurement">Body Measurements</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recordDate">Date</label>
+                        <input type="date" id="recordDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="recordNotes">Notes (Optional)</label>
+                        <textarea id="recordNotes"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div id="dropZone" class="drop-zone">
+                            <div class="upload-content">
+                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                <p class="upload-text">Drag & Drop files here</p>
+                                <div class="file-input-container">
+                                    <button type="button" class="browse-btn">
+                                        <i class="fas fa-folder-open"></i> Browse Files
+                                    </button>
+                                    <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png">
+                                </div>
+                            </div>
+                            <p class="supported-formats">Supported formats: PDF, JPG, PNG</p>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancelUpload" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="submit-btn">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/records.js"></script>
+</body>
+</html> 
