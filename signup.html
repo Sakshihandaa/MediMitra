@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - PHR</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <img src="images/logo.svg" alt="PHR Logo" class="auth-logo">
+                <h1>Create Account</h1>
+                <p>Join our digital health platform</p>
+            </div>
+
+            <form class="auth-form" id="signupForm">
+                <div class="form-group">
+                    <label for="role">I want to register as</label>
+                    <div class="role-selector">
+                        <input type="radio" id="signup-patient" name="role" value="patient" checked>
+                        <label for="signup-patient" class="role-label">
+                            <i class="fas fa-user"></i>
+                            Patient
+                        </label>
+                        <input type="radio" id="signup-hospital" name="role" value="hospital">
+                        <label for="signup-hospital" class="role-label">
+                            <i class="fas fa-hospital"></i>
+                            Hospital
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Patient Form Fields -->
+                <div class="form-fields patient-fields">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="abhaId">ABHA ID (Optional)</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-id-card"></i>
+                            <input type="text" id="abhaId" name="abhaId">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospital Form Fields -->
+                <div class="form-fields hospital-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="hospitalName">Hospital Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-hospital"></i>
+                            <input type="text" id="hospitalName" name="hospitalName">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="licenseId">License ID</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-certificate"></i>
+                            <input type="text" id="licenseId" name="licenseId">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hospitalEmail">Email</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="hospitalEmail" name="hospitalEmail">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contactNumber">Contact Number</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="contactNumber" name="contactNumber">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hospitalPassword">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="hospitalPassword" name="hospitalPassword">
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmHospitalPassword">Confirm Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirmHospitalPassword" name="confirmHospitalPassword">
+                            <button type="button" class="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="terms-agreement">
+                        <input type="checkbox" name="terms" required>
+                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="auth-btn">Create Account</button>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <div class="social-login">
+                    <button type="button" class="social-btn google">
+                        <i class="fab fa-google"></i>
+                        Continue with Google
+                    </button>
+                    <button type="button" class="social-btn abha">
+                        <i class="fas fa-id-card"></i>
+                        Continue with ABHA ID
+                    </button>
+                </div>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html> 

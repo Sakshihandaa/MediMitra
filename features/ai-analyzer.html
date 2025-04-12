@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Report Analyzer - PHR</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/features.css">
+    <link rel="stylesheet" href="../css/ai-analyzer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="../js/auth.js"></script>
+    <script>
+        // Simple authentication check
+        function checkAuth() {
+            return localStorage.getItem('auth_token') !== null;
+        }
+
+        // Check authentication on page load
+        if (!checkAuth()) {
+            window.location.href = '../login.html';
+        }
+
+        // Update user name in navbar
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('user_data') || '{}');
+            const userName = document.querySelector('.user-name');
+            if (userName && userData) {
+                userName.textContent = userData.name || 'User';
+            }
+
+            // Add logout handler
+            const logoutBtn = document.querySelector('.logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('auth_token');
+                    localStorage.removeItem('user_data');
+                    window.location.href = '../index.html';
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">PHR</a>
+            <ul class="nav-links">
+                <li><a href="../dashboard.html">Dashboard</a></li>
+                <li><a href="../about.html">About Us</a></li>
+                <li><a href="../contact.html">Contact Us</a></li>
+                <li class="user-menu">
+                    <a href="#" class="user-name"></a>
+                    <div class="dropdown-menu">
+                        <a href="../dashboard.html">Dashboard</a>
+                        <a href="#" class="logout-btn">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="analyzer-container">
+        <section id="upload" class="upload-section">
+            <h1>AI Report Analyzer</h1>
+            <p>Upload your medical reports for instant AI-powered analysis and insights.</p>
+            
+            <div class="upload-area">
+                <div class="upload-box" id="dropZone">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Drag & Drop your report here</h3>
+                    <p>or</p>
+                    <button class="upload-btn">Browse Files</button>
+                    <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                </div>
+                
+                <div class="supported-formats">
+                    <h4>Supported Formats:</h4>
+                    <ul>
+                        <li><i class="fas fa-file-pdf"></i> PDF</li>
+                        <li><i class="fas fa-file-image"></i> JPG/JPEG</li>
+                        <li><i class="fas fa-file-image"></i> PNG</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="analysis" class="analysis-section" style="display: none;">
+            <h2>Analysis Results</h2>
+            <div class="analysis-container">
+                <div class="report-preview">
+                    <h3>Report Preview</h3>
+                    <div class="preview-container">
+                        <img id="reportPreview" src="" alt="Report Preview">
+                    </div>
+                </div>
+                
+                <div class="ai-analysis">
+                    <h3>AI Analysis</h3>
+                    <div class="analysis-results">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Analyzing your report...</p>
+                        </div>
+                        <div class="results" style="display: none;">
+                            <div class="result-item">
+                                <h4>Key Findings</h4>
+                                <ul id="keyFindings"></ul>
+                            </div>
+                            <div class="result-item">
+                                <h4>Recommendations</h4>
+                                <ul id="recommendations"></ul>
+                            </div>
+                            <div class="result-item">
+                                <h4>Next Steps</h4>
+                                <ul id="nextSteps"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="saveAnalysis">Save Analysis</button>
+                <button class="btn btn-secondary" id="shareAnalysis">Share with Doctor</button>
+                <button class="btn btn-outline" id="newAnalysis">Analyze Another Report</button>
+            </div>
+        </section>
+
+        <section id="history" class="history-section">
+            <h2>Analysis History</h2>
+            <div class="history-container">
+                <div class="history-filters">
+                    <input type="text" placeholder="Search reports..." id="searchReports">
+                    <select id="filterDate">
+                        <option value="all">All Time</option>
+                        <option value="week">Last Week</option>
+                        <option value="month">Last Month</option>
+                        <option value="year">Last Year</option>
+                    </select>
+                </div>
+                
+                <div class="history-list" id="historyList">
+                    <!-- History items will be dynamically added here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> support@phr.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                        <li><a href="../terms.html">Terms of Service</a></li>
+                        <li><a href="../faq.html">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Personal Health Record. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/ai-analyzer.js"></script>
+</body>
+</html> 

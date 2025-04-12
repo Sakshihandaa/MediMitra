@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Health Record</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="js/auth.js"></script>
+    <script>
+
+
+        // Simple authentication check
+        function checkAuth() {
+            return localStorage.getItem('auth_token') !== null;
+        }
+
+        // Simple logout function
+        function logout() {
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user_data');
+            window.location.href = 'index.html';
+        }
+
+        // Update UI based on auth state
+        function updateAuthUI() {
+            const isLoggedIn = checkAuth();
+            const authButtons = document.querySelector('.auth-buttons');
+            const userMenu = document.querySelector('.user-menu');
+            const userName = document.querySelector('.user-name');
+            
+            if (isLoggedIn) {
+                authButtons.style.display = 'none';
+                userMenu.style.display = 'block';
+                const userData = JSON.parse(localStorage.getItem('user_data') || '{}');
+                userName.textContent = userData.name || 'User';
+            } else {
+                authButtons.style.display = 'block';
+                userMenu.style.display = 'none';
+            }
+        }
+
+        // Handle feature clicks
+        function handleFeatureClick(event) {
+            if (!checkAuth()) {
+                event.preventDefault();
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update auth UI
+            updateAuthUI();
+
+            // Add feature click handlers
+            const featureLinks = document.querySelectorAll('.feature-link');
+            featureLinks.forEach(link => {
+                link.addEventListener('click', handleFeatureClick);
+            });
+
+            // Add logout handler
+            const logoutBtn = document.querySelector('.logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    logout();
+                });
+            }
+        });
+    </script>
+
+<!-- Google Translate Script -->
+<!-- Google Translate Script with Indian Languages -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        {
+          pageLanguage: 'en',
+          includedLanguages: 'en,hi,bn,te,mr,ta,ur,gu,kn,or,ml,pa,as,mai,kok,sa',
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        },
+        'google_translate_element'
+      );
+    }
+  </script>
+  
+  <script type="text/javascript" 
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+  </script>
+
+
+</head>
+<body>
+    <!-- Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <a href="index.html" class="logo">PHR</a>
+        <div class="nav-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="hospitals.html">Find Hospitals</a></li>
+            <li>
+                <div id="google_translate_element"></div>
+            </li>
+            <li class="no-auth-only">
+                <a href="login.html" class="login-btn">Login</a>
+            </li>
+            <li class="no-auth-only">
+                <a href="signup.html" class="register-btn">Register</a>
+            </li>
+            <li class="user-menu auth-only" style="display: none;">
+                <a href="#" class="user-name">User</a>
+                <div class="dropdown-menu">
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="#" class="logout-btn">Logout</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Your Digital Health Companion</h1>
+                <p class="hero-subtitle">Manage your health records, track vitals, and connect with healthcare providers - all in one place.</p>
+                <div class="hero-features">
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Secure & Private</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-sync"></i>
+                        <span>Real-time Updates</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Mobile Friendly</span>
+                    </div>
+                </div>
+                <div class="cta-buttons">
+                    <a href="register.html" class="btn btn-primary btn-lg">Get Started</a>
+                    <a href="#features" class="btn btn-outline btn-lg">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="images/logo.svg" alt="Health Dashboard">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <p class="section-subtitle">Everything you need to manage your health in one place</p>
+            <div class="grid grid-3">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h3>ABHA ID Integration</h3>
+                    <p>Link your Ayushman Bharat Health Account for seamless health record management.</p>
+                    <a href="features/abha.html" class="feature-link">
+                        <span class="not-logged-in">Login to Access</span>
+                        <span class="logged-in">Access Feature</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Health Graphs</h3>
+                    <p>Track and visualize your health metrics with interactive graphs and analytics.</p>
+                    <a href="features/graphs.html" class="feature-link">
+                        <span class="not-logged-in">Login to Access</span>
+                        <span class="logged-in">Access Feature</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Vitals Tracker</h3>
+                    <p>Monitor your vital signs and receive alerts for abnormal readings.</p>
+                    <a href="features/vitals.html" class="feature-link">
+                        <span class="not-logged-in">Login to Access</span>
+                        <span class="logged-in">Access Feature</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <h3>Health Records</h3>
+                    <p>Store and manage all your medical reports securely in one place.</p>
+                    <a href="features/records.html" class="feature-link">
+                        <span class="not-logged-in">Login to Access</span>
+                        <span class="logged-in">Access Feature</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Insurance</h3>
+                    <p>Manage your health insurance policies and claims efficiently.</p>
+                    <a href="features/insurance.html" class="feature-link">
+                        <span class="not-logged-in">Login to Access</span>
+                        <span class="logged-in">Access Feature</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <h3>Symptom Checker</h3>
+                    <p>Get AI-powered insights about your symptoms and next steps.</p>
+                    <a href="features/symptoms.html" class="feature-link">
+                        <span class="not-logged-in">Login to Access</span>
+                        <span class="logged-in">Access Feature</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI Analyzer</h3>
+                    <p>Get AI-powered analysis of your health data and reports.</p>
+                    <a href="features/ai-analyzer.html" class="feature-link">
+                        <span class="not-logged-in">Login to Access</span>
+                        <span class="logged-in">Access Feature</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Appointments</h3>
+                    <p>Schedule and manage your medical appointments.</p>
+                    <a href="features/appointments.html" class="feature-link">
+                        <span class="not-logged-in">Login to Access</span>
+                        <span class="logged-in">Access Feature</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Users Say</h2>
+            <p class="section-subtitle">Join thousands of satisfied users who trust us with their health</p>
+            <div class="testimonial-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"PHR has made managing my health records so much easier. I can access all my reports anytime, anywhere."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="./PATIENT1.jpg" alt="User 1">
+                        <div>
+                            <h4>Rahul Sharma</h4>
+                            <p>Patient</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"As a healthcare provider, PHR has streamlined our patient record management process significantly."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="./DOCTOR1.jpg" alt="User 2">
+                        <div>
+                            <h4>Dr. Priya Patel</h4>
+                            <p>Healthcare Provider</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to take control of your health?</h2>
+            <p>Join thousands of users who trust PHR with their health management</p>
+            <div class="cta-buttons">
+                <a href="signup.html" class="btn btn-primary btn-lg">Get Started Now</a>
+                <a href="#features" class="btn btn-outline btn-lg">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About PHR</h3>
+                    <p>Your comprehensive digital health companion for managing medical records, tracking health metrics, and connecting with healthcare providers.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Use</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><a href="mailto:support@phr.com"><i class="fas fa-envelope"></i> support@phr.com</a></li>
+                        <li><a href="tel:+911234567890"><i class="fas fa-phone"></i> +91 1234567890</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Health Street, Medical City</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for health tips and updates</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Enter your email">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PHR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Buttons -->
+    <button id="sos-btn" class="floating-btn sos-btn" title="Emergency SOS">
+        <i class="fas fa-ambulance"></i>
+    </button>
+    <button id="chatbot-btn" class="floating-btn chatbot-btn" title="Health Assistant">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <!-- Chatbot Modal -->
+    <div id="chatbot-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Health Assistant</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="chat-messages">
+                <div class="message bot">
+                    <p>Hello! I'm your health assistant. How can I help you today?</p>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message...">
+                <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/home.js"></script>
+</body>
+</html> 

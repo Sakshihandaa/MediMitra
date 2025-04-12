@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Graphs - PHR</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/features.css">
+    <link rel="stylesheet" href="../css/graphs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add auth.js before other scripts -->
+    <script src="../js/auth.js"></script>
+    <script>
+        // Simple authentication check
+        function checkAuth() {
+            return localStorage.getItem('auth_token') !== null;
+        }
+
+        // Check authentication on page load
+        if (!checkAuth()) {
+            window.location.href = '../login.html';
+        }
+
+        // Update user name in navbar
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('user_data') || '{}');
+            const userName = document.querySelector('.user-name');
+            if (userName && userData) {
+                userName.textContent = userData.name || 'User';
+            }
+
+            // Add logout handler
+            const logoutBtn = document.querySelector('.logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('auth_token');
+                    localStorage.removeItem('user_data');
+                    window.location.href = '../index.html';
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">PHR</a>
+            <ul class="nav-links">
+                <li><a href="../dashboard.html">Dashboard</a></li>
+                <li><a href="../about.html">About Us</a></li>
+                <li><a href="../contact.html">Contact Us</a></li>
+                <li class="user-menu">
+                    <a href="#" class="user-name"></a>
+                    <div class="dropdown-menu">
+                        <a href="../dashboard.html">Dashboard</a>
+                        <a href="#" class="logout-btn">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="graphs-container">
+        <section class="graphs-header">
+            <h1>Health Graphs</h1>
+            <p>Visualize and track your health metrics over time</p>
+        </section>
+
+        <section class="graphs-content">
+            <div class="graph-controls">
+                <select id="metricSelect">
+                    <option value="weight">Weight</option>
+                    <option value="blood-pressure">Blood Pressure</option>
+                    <option value="blood-sugar">Blood Sugar</option>
+                    <option value="heart-rate">Heart Rate</option>
+                </select>
+                <select id="timeRange">
+                    <option value="week">Last Week</option>
+                    <option value="month">Last Month</option>
+                    <option value="year">Last Year</option>
+                </select>
+                <button id="addDataPoint" class="btn-primary">Add Data Point</button>
+            </div>
+
+            <div class="graph-display">
+                <canvas id="healthChart"></canvas>
+            </div>
+
+            <div class="graph-insights">
+                <h3>Insights</h3>
+                <div id="insights-content">
+                    <!-- Insights will be dynamically populated -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p><i class="fas fa-envelope"></i> support@phr.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../privacy.html">Privacy Policy</a></li>
+                        <li><a href="../terms.html">Terms of Service</a></li>
+                        <li><a href="../faq.html">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Personal Health Record. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/graphs.js"></script>
+</body>
+</html> 

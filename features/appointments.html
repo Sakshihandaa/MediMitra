@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - PHR</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/appointments.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="images/logo.svg" alt="PHR Logo">
+                <span>PHR</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="#book">Book Appointment</a>
+                <a href="#upcoming">Upcoming</a>
+                <a href="#history">History</a>
+            </div>
+            <div class="auth-buttons">
+                <a href="profile.html" class="profile-btn">Profile</a>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="appointments-container">
+        <section id="book" class="booking-section">
+            <h1>Book an Appointment</h1>
+            <p>Schedule your visit with healthcare providers</p>
+
+            <div class="booking-steps">
+                <div class="step active" data-step="1">
+                    <span class="step-number">1</span>
+                    <span class="step-title">Select Doctor</span>
+                </div>
+                <div class="step" data-step="2">
+                    <span class="step-number">2</span>
+                    <span class="step-title">Choose Date & Time</span>
+                </div>
+                <div class="step" data-step="3">
+                    <span class="step-number">3</span>
+                    <span class="step-title">Confirm Booking</span>
+                </div>
+            </div>
+
+            <div class="booking-content">
+                <!-- Step 1: Select Doctor -->
+                <div class="step-content active" data-step="1">
+                    <div class="search-filters">
+                        <input type="text" placeholder="Search doctors..." id="doctorSearch">
+                        <select id="specialtyFilter">
+                            <option value="">All Specialties</option>
+                            <option value="cardiology">Cardiology</option>
+                            <option value="dermatology">Dermatology</option>
+                            <option value="neurology">Neurology</option>
+                            <option value="pediatrics">Pediatrics</option>
+                            <option value="orthopedics">Orthopedics</option>
+                        </select>
+                        <select id="locationFilter">
+                            <option value="">All Locations</option>
+                            <option value="delhi">Delhi</option>
+                            <option value="mumbai">Mumbai</option>
+                            <option value="bangalore">Bangalore</option>
+                            <option value="hyderabad">Hyderabad</option>
+                        </select>
+                    </div>
+
+                    <div class="doctors-grid" id="doctorsList">
+                        <!-- Doctor cards will be dynamically added here -->
+                    </div>
+                </div>
+
+                <!-- Step 2: Choose Date & Time -->
+                <div class="step-content" data-step="2">
+                    <div class="calendar-container">
+                        <div id="calendar"></div>
+                        <div class="time-slots">
+                            <h3>Available Time Slots</h3>
+                            <div class="slots-grid" id="timeSlots">
+                                <!-- Time slots will be dynamically added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Confirm Booking -->
+                <div class="step-content" data-step="3">
+                    <div class="booking-summary">
+                        <h3>Appointment Summary</h3>
+                        <div class="summary-details">
+                            <div class="detail-item">
+                                <span class="label">Doctor:</span>
+                                <span class="value" id="summaryDoctor">Dr. John Doe</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Specialty:</span>
+                                <span class="value" id="summarySpecialty">Cardiology</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Date:</span>
+                                <span class="value" id="summaryDate">15 March 2024</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Time:</span>
+                                <span class="value" id="summaryTime">10:00 AM</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Location:</span>
+                                <span class="value" id="summaryLocation">Delhi Hospital</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="booking-notes">
+                        <h3>Additional Notes</h3>
+                        <textarea id="bookingNotes" placeholder="Add any additional information or questions for the doctor..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="booking-navigation">
+                <button class="btn btn-outline" id="prevStep" disabled>Previous</button>
+                <button class="btn btn-primary" id="nextStep">Next</button>
+            </div>
+        </section>
+
+        <!-- Upcoming Appointments -->
+        <section id="upcoming" class="appointments-section">
+            <h2>Upcoming Appointments</h2>
+            <div class="appointments-list" id="upcomingAppointments">
+                <!-- Upcoming appointments will be dynamically added here -->
+            </div>
+        </section>
+
+        <!-- Appointment History -->
+        <section id="history" class="appointments-section">
+            <h2>Appointment History</h2>
+            <div class="appointments-list" id="appointmentHistory">
+                <!-- Appointment history will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>About PHR</h3>
+                    <p>Your comprehensive digital health companion for managing medical records, tracking health metrics, and connecting with healthcare providers.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms of Use</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#help">Help Center</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PHR. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="js/appointments.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Simple authentication check
+        function checkAuth() {
+            return localStorage.getItem('auth_token') !== null;
+        }
+
+        // Check authentication on page load
+        if (!checkAuth()) {
+            window.location.href = '../login.html';
+        }
+
+        // Update user name in navbar
+        document.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('user_data') || '{}');
+            const userName = document.querySelector('.user-name');
+            if (userName && userData) {
+                userName.textContent = userData.name || 'User';
+            }
+
+            // Add logout handler
+            const logoutBtn = document.querySelector('.logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('auth_token');
+                    localStorage.removeItem('user_data');
+                    window.location.href = '../index.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

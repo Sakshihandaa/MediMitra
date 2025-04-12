@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PHR</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/features.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is authenticated
+            if (!isAuthenticated()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load user data
+            const userData = getUserData();
+            if (!userData) {
+                handleLogout();
+                return;
+            }
+
+            // Update user info
+            const userName = document.getElementById('userName');
+            const welcomeName = document.getElementById('welcomeName');
+            const userEmail = document.getElementById('userEmail');
+            
+            if (userName) userName.textContent = userData.name;
+            if (welcomeName) welcomeName.textContent = userData.name;
+            if (userEmail) userEmail.textContent = userData.email;
+
+            // Handle logout
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    handleLogout();
+                });
+            }
+
+            // Initialize dashboard features
+            initializeCharts();
+            loadRecentData();
+
+            // Show overview section by default
+            showSection('overview');
+
+            // Handle navigation
+            const navLinks = document.querySelectorAll('.sidebar-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    if (href.startsWith('#')) {
+                        // Internal section
+                        showSection(href.substring(1));
+                    } else {
+                        // External page
+                        window.location.href = href;
+                    }
+                });
+            });
+
+            // Handle mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                });
+            }
+        });
+
+        // Show specific section and hide others
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.dashboard-section');
+            sections.forEach(section => {
+                if (section.id === sectionId) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            // Update active link in sidebar
+            const navLinks = document.querySelectorAll('.sidebar-menu a');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${sectionId}`) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            const ctx = document.getElementById('healthChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Blood Pressure',
+                            data: [120, 122, 119, 125, 118, 121],
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+        }
+
+        // Load recent data
+        function loadRecentData() {
+            // Load recent vitals
+            const recentVitals = document.getElementById('recentVitals');
+            if (recentVitals) {
+                recentVitals.innerHTML = `
+                    <div class="vital-item">
+                        <span>Blood Pressure</span>
+                        <span>120/80 mmHg</span>
+                    </div>
+                    <div class="vital-item">
+                        <span>Heart Rate</span>
+                        <span>72 bpm</span>
+                    </div>
+                `;
+            }
+
+            // Load upcoming appointments
+            const upcomingAppointments = document.getElementById('upcomingAppointments');
+            if (upcomingAppointments) {
+                upcomingAppointments.innerHTML = `
+                    <div class="appointment-item">
+                        <span>Dr. Smith</span>
+                        <span>Tomorrow, 10:00 AM</span>
+                    </div>
+                `;
+            }
+
+            // Load recent records
+            const recentRecords = document.getElementById('recentRecords');
+            if (recentRecords) {
+                recentRecords.innerHTML = `
+                    <div class="record-item">
+                        <span>Blood Test Report</span>
+                        <span>2 days ago</span>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="profile-section">
+                <img src="images/avatar.png" alt="Profile Picture">
+                <h3 id="userName">Hello</h3>
+                <p id="userEmail">hello@gmail.com</p>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#overview" class="active">
+                    <i class="fas fa-home"></i>
+                    Overview
+                </a>
+                <a href="features/abha.html">
+                    <i class="fas fa-id-card"></i>
+                    ABHA ID
+                </a>
+                <a href="features/graphs.html">
+                    <i class="fas fa-chart-line"></i>
+                    Health Graphs
+                </a>
+                <a href="features/vitals.html">
+                    <i class="fas fa-heartbeat"></i>
+                    Vitals Tracker
+                </a>
+                <a href="features/records.html">
+                    <i class="fas fa-file-medical"></i>
+                    Health Records
+                </a>
+                <a href="features/insurance.html">
+                    <i class="fas fa-shield-alt"></i>
+                    Insurance
+                </a>
+                <a href="features/ai-analyzer.html">
+                    <i class="fas fa-robot"></i>
+                    AI Analyzer
+                </a>
+                <a href="features/appointments.html">
+                    <i class="fas fa-calendar-check"></i>
+                    Appointments
+                </a>
+                <a href="#" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="dashboard-section">
+                <div class="welcome-section">
+                    <h1>Welcome Back, <span id="welcomeName">Hello</span>!</h1>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Recent Vitals -->
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-heartbeat"></i>Recent Vitals</h2>
+                        <div class="vitals-grid" id="recentVitals">
+                            <p>Loading vitals...</p>
+                        </div>
+                    </div>
+
+                    <!-- Upcoming Appointments -->
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-calendar-check"></i>Upcoming Appointments</h2>
+                        <div class="appointment-list" id="upcomingAppointments">
+                            <p>Loading appointments...</p>
+                        </div>
+                    </div>
+
+                    <!-- Recent Records -->
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-file-medical"></i>Recent Records</h2>
+                        <div class="record-list" id="recentRecords">
+                            <p>Loading records...</p>
+                        </div>
+                    </div>
+
+                    <!-- Health Trends -->
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-chart-line"></i>Health Trends</h2>
+                        <div class="health-trends">
+                            <canvas id="healthChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABHA ID Section -->
+            <section id="abha" class="dashboard-section">
+                <h1>ABHA ID Management</h1>
+                <div class="dashboard-card">
+                    <div class="abha-content">
+                        <h2><i class="fas fa-id-card"></i>Your ABHA Profile</h2>
+                        <div id="abhaDetails">
+                            <p>Link your ABHA ID to manage your health records seamlessly.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Health Graphs Section -->
+            <section id="graphs" class="dashboard-section">
+                <h1>Health Graphs</h1>
+                <div class="dashboard-card">
+                    <div class="graphs-content">
+                        <h2><i class="fas fa-chart-line"></i>Health Trends Analysis</h2>
+                        <div class="graphs-container">
+                            <canvas id="trendsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vitals Tracker Section -->
+            <section id="vitals" class="dashboard-section">
+                <h1>Vitals Tracker</h1>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-heartbeat"></i>Current Vitals</h2>
+                        <div class="vitals-grid" id="currentVitals"></div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-plus"></i>Record New Vitals</h2>
+                        <div class="vitals-form" id="vitalsForm"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Health Records Section -->
+            <section id="records" class="dashboard-section">
+                <h1>Health Records</h1>
+                <div class="dashboard-card">
+                    <h2><i class="fas fa-file-medical"></i>Your Health Records</h2>
+                    <div class="record-list" id="healthRecords"></div>
+                </div>
+            </section>
+
+            <!-- Insurance Section -->
+            <section id="insurance" class="dashboard-section">
+                <h1>Insurance Management</h1>
+                <div class="dashboard-card">
+                    <h2><i class="fas fa-shield-alt"></i>Your Insurance Policies</h2>
+                    <div class="insurance-list" id="insurancePolicies"></div>
+                </div>
+            </section>
+
+            <!-- Symptom Checker Section -->
+            <section id="symptoms" class="dashboard-section">
+                <h1>Symptom Checker</h1>
+                <div class="dashboard-card">
+                    <h2><i class="fas fa-stethoscope"></i>Check Your Symptoms</h2>
+                    <div class="symptom-checker" id="symptomChecker"></div>
+                </div>
+            </section>
+
+            <!-- AI Analyzer Section -->
+            <section id="analyzer" class="dashboard-section">
+                <h1>AI Health Analyzer</h1>
+                <div class="dashboard-card">
+                    <h2><i class="fas fa-robot"></i>Analyze Health Reports</h2>
+                    <div class="ai-analyzer" id="aiAnalyzer"></div>
+                </div>
+            </section>
+
+            <!-- Appointments Section -->
+            <section id="appointments" class="dashboard-section">
+                <h1>Appointments</h1>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-calendar-check"></i>Upcoming Appointments</h2>
+                        <div class="appointment-list" id="appointmentsList"></div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h2><i class="fas fa-plus"></i>Schedule New Appointment</h2>
+                        <div class="appointment-form" id="appointmentForm"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Floating Buttons -->
+        <div class="floating-buttons">
+            <button id="sos-btn" class="floating-btn" title="Emergency SOS">
+                <i class="fas fa-exclamation-triangle"></i>
+            </button>
+            <button id="chatbot-btn" class="floating-btn" title="Health Assistant">
+                <i class="fas fa-robot"></i>
+            </button>
+        </div>
+
+        <!-- Chatbot Modal -->
+        <div id="chatbot-modal" class="chatbot-modal">
+            <div class="chatbot-header">
+                <h3>Health Assistant</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="chat-messages"></div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message...">
+                <button class="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html> 

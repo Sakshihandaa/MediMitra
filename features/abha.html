@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABHA ID Management - PHR</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/features.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add auth.js before other scripts -->
+    <script src="../js/auth.js"></script>
+    <script>
+        // Immediate authentication check when the script loads
+        if (!isAuthenticated()) {
+            window.location.href = '../login.html';
+        }
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">PHR</a>
+            <ul class="nav-links">
+                <li><a href="../dashboard.html">Dashboard</a></li>
+                <li><a href="../about.html">About Us</a></li>
+                <li><a href="../contact.html">Contact Us</a></li>
+                <li class="user-menu">
+                    <a href="#" class="user-name"></a>
+                    <div class="dropdown-menu">
+                        <a href="../dashboard.html">Dashboard</a>
+                        <a href="#" class="logout-btn">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="feature-section">
+        <div class="feature-header">
+            <h1><i class="fas fa-id-card"></i> ABHA ID Integration</h1>
+            <p>Connect your Ayushman Bharat Health Account</p>
+        </div>
+
+        <div class="feature-content">
+            <div class="abha-form" id="abhaForm">
+                <h2>Link Your ABHA ID</h2>
+                <div class="form-group">
+                    <label for="abhaId">ABHA ID</label>
+                    <input type="text" id="abhaId" placeholder="Enter your 14-digit ABHA ID">
+                </div>
+                <div class="form-group">
+                    <label for="abhaPassword">Password</label>
+                    <input type="password" id="abhaPassword" placeholder="Enter your ABHA password">
+                </div>
+                <button type="submit" class="btn-primary">Link ABHA ID</button>
+            </div>
+
+            <div class="profile-section" id="profileSection" style="display: none;">
+                <h2>Your Health Profile</h2>
+                <div class="profile-info">
+                    <div class="info-group">
+                        <label>Name</label>
+                        <p id="profileName">John Doe</p>
+                    </div>
+                    <div class="info-group">
+                        <label>ABHA ID</label>
+                        <p id="profileAbhaId">XXXX-XXXX-XXXX</p>
+                    </div>
+                    <div class="info-group">
+                        <label>Date of Birth</label>
+                        <p id="profileDob">01/01/1990</p>
+                    </div>
+                    <div class="info-group">
+                        <label>Gender</label>
+                        <p id="profileGender">Male</p>
+                    </div>
+                    <div class="info-group">
+                        <label>Blood Group</label>
+                        <p id="profileBloodGroup">O+</p>
+                    </div>
+                    <div class="info-group">
+                        <label>Address</label>
+                        <p id="profileAddress">123 Health Street, Medical City</p>
+                    </div>
+                    <div class="info-group">
+                        <label>Mobile</label>
+                        <p id="profileMobile">+91 XXXXX XXXXX</p>
+                    </div>
+                </div>
+                <button class="btn-secondary" id="editProfileBtn">Edit Profile</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html> 
