@@ -75,13 +75,13 @@ function initRecordsUpload() {
         if (uploadBtn2) {
             uploadBtn2.addEventListener('click', () => {
                 fileInput.click();
-            });
+        });
         }
         
         if (fileInput) {
             fileInput.addEventListener('change', (e) => {
-                handleFiles(e.target.files);
-            });
+            handleFiles(e.target.files);
+        });
         }
     }
 }
@@ -215,13 +215,13 @@ function handleUploadSubmit(e) {
     // Process files
     const filePromises = Array.from(files).map(file => {
         return new Promise((resolve) => {
-            const reader = new FileReader();
-            
-            reader.onload = (e) => {
+        const reader = new FileReader();
+        
+        reader.onload = (e) => {
                 resolve({
-                    name: file.name,
-                    type: file.type,
-                    size: file.size,
+                name: file.name,
+                type: file.type,
+                size: file.size,
                     data: e.target.result,
                     uploadDate: new Date().toISOString()
                 });
@@ -539,15 +539,15 @@ function handleDeleteRecord(e) {
     deleteBtn.addEventListener('click', () => {
         const records = JSON.parse(localStorage.getItem('healthRecords') || '[]');
         const recordToDelete = records.find(record => record.id === recordId);
-        
-        // Filter out the record to delete
-        const updatedRecords = records.filter(record => record.id !== recordId);
-        
-        // Save updated records
-        localStorage.setItem('healthRecords', JSON.stringify(updatedRecords));
-        
-        // Update records list
-        updateRecordsList();
+    
+    // Filter out the record to delete
+    const updatedRecords = records.filter(record => record.id !== recordId);
+    
+    // Save updated records
+    localStorage.setItem('healthRecords', JSON.stringify(updatedRecords));
+    
+    // Update records list
+    updateRecordsList();
         
         // Remove confirmation dialog
         document.body.removeChild(confirmDialog);
