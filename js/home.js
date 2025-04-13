@@ -3,28 +3,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize components
     initFeatureCards();
     initSOSButton();
-    initChatbot();
     initNewsletter();
     initResponsiveMenu();
 });
 
-// Feature Cards Click Handlers
+// Initialize feature cards
 function initFeatureCards() {
     const featureCards = document.querySelectorAll('.feature-card');
-    
     featureCards.forEach(card => {
-        card.addEventListener('click', function(e) {
-            e.preventDefault();
-            const isLoggedIn = localStorage.getItem('userToken');
-            
-            if (!isLoggedIn) {
-                alert('Please login to access this feature');
-                window.location.href = 'login.html';
-                return;
-            }
-
-            const feature = this.getAttribute('data-feature');
-            window.location.href = `dashboard.html#${feature}`;
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px)';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
         });
     });
 }
@@ -35,7 +26,7 @@ function initSOSButton() {
     
     if (sosBtn) {
         sosBtn.addEventListener('click', function() {
-            const isLoggedIn = localStorage.getItem('userToken');
+            const isLoggedIn = localStorage.getItem('auth_token');
             if (!isLoggedIn) {
                 alert('Please login to use the SOS feature');
                 window.location.href = 'login.html';
@@ -60,92 +51,29 @@ function initSOSButton() {
     }
 }
 
-// Chatbot Functionality
-function initChatbot() {
-    const chatbotBtn = document.getElementById('chatbot-btn');
-    const chatbotModal = document.getElementById('chatbot-modal');
-    const closeBtn = document.querySelector('.close-btn');
-    const sendBtn = document.querySelector('.send-btn');
-    const chatInput = document.querySelector('.chat-input input');
-    const chatMessages = document.querySelector('.chat-messages');
-
-    if (chatbotBtn && chatbotModal) {
-        chatbotBtn.addEventListener('click', function() {
-            const isLoggedIn = localStorage.getItem('userToken');
-            if (!isLoggedIn) {
-                alert('Please login to use the chatbot');
-                window.location.href = 'login.html';
-                return;
-            }
-            chatbotModal.style.display = 'block';
-        });
-
-        closeBtn.addEventListener('click', function() {
-            chatbotModal.style.display = 'none';
-        });
-
-        sendBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
-    }
-
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-            addMessage(message, 'user');
-            chatInput.value = '';
-            
-            // Simulate AI response
-            setTimeout(() => {
-                const responses = [
-                    "I'm here to help with your health queries. How can I assist you today?",
-                    "I can help you track your health metrics and provide general health advice.",
-                    "For medical emergencies, please use the SOS button or contact emergency services.",
-                    "I can help you understand your health records and provide basic health information."
-                ];
-                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                addMessage(randomResponse, 'bot');
-            }, 1000);
-        }
-    }
-
-    function addMessage(text, sender) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${sender}`;
-        messageDiv.textContent = text;
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-}
-
-// Newsletter Subscription
+// Newsletter Form
 function initNewsletter() {
-    const newsletterForm = document.getElementById('newsletterForm');
+    const newsletterForm = document.querySelector('.newsletter-form');
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const email = document.getElementById('newsletterEmail').value;
+            const email = this.querySelector('input[type="email"]').value;
             if (email) {
-                // In production, send this to your backend
                 alert('Thank you for subscribing to our newsletter!');
-                newsletterForm.reset();
+                this.reset();
             }
         });
     }
 }
 
-// Initialize responsive menu
+// Responsive Menu
 function initResponsiveMenu() {
-    const menuToggle = document.querySelector('.menu-toggle');
+    const navToggle = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
     
-    if (menuToggle && navLinks) {
-        menuToggle.addEventListener('click', function() {
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            menuToggle.classList.toggle('active');
         });
     }
 }
